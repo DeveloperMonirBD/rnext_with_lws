@@ -1,8 +1,14 @@
 import comments from '@/app/data/comments';
+import { redirect } from 'next/navigation';
 
 // GET /api/comments/:id
 export async function GET(_request, { params }) {
     const commentId = params.id;
+
+    if (parseInt(commentId) > comments.length) {
+        redirect('/api/comments');
+    }
+
     const comment = comments.find(comment => comment.id === parseInt(commentId));
 
     return Response.json(comment);
